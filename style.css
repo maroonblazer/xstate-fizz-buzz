@@ -1,0 +1,14 @@
+body {
+  max-width: 40rem;
+}
+li {
+  font-family: sans-serif;
+  min-width: 2em;
+  text-align: center;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 255, 0.1);
+  background-color: rgba(0, 0, 255, 0.3);
+  padding: 0.5rem;
+  margin: 10px;
+  border-radius: 2rem;
+}

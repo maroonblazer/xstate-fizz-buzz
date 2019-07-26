@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "eslint": "^6.1.0",
+    "xstate": "^4.6.7"
+  },
+  "name": "event-driven-fizzbuzz",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}
