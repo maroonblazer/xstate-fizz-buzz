@@ -1,43 +1,45 @@
-// const xstate = require('xstate'); // we're importing xstate directly onto the page so we don't need this for front-end/client-side
+// const xstate = require('xstate'); // we're importing xstate via index.html so we don't need this for front-end/client-side
 
-const machine = xstate.Machine({
+const fizzBuzzMachine = XState.Machine({
   initial: 'digit',
+  on: {
+    increment: [
+      { cond: i => i % 3 == 0 && i % 5 == 0, target: '.fizzBuzz' },
+      { cond: i => i % 3 == 0, target: '.fizz' },
+      { cond: i => i % 5 == 0, target: '.buzz' },
+      { target: '.digit' }
+    ]
+  },
   states: {
     digit: {
-      on: {
-        increment: 'digit'
-      },
       onEntry: 'print_digit'
+    },
+    fizz: {
+      onEntry: 'print_fizz'
+    },
+    buzz: {
+      onEntry: 'print_buzz'
+    },
+    fizzbuzz: {
+      onEntry: 'print_fizzBuzz'
     }
   }
 });
 
 const actions = {
-  // print_digit: i => console.log(i)
-  // print_digit: i => document.write('<li>' + i + '</li>')
   print_digit: i =>
-    (document.querySelector('#digit').innerHTML += '<li>' + i + '</li>')
+    (document.querySelector('#digit').innerHTML += '<li>' + i + '</li>'),
+  print_fizz: () =>
+    (document.querySelector('#digit').innerHTML += '<li>Fizz</li>'),
+  print_buzz: () =>
+    (document.querySelector('#digit').innerHTML += '<li>Buzz</li>'),
+  print_fizzBuzz: () =>
+    (document.querySelector('#digit').innerHTML += '<li>FizzBuzz</li>')
 };
 
-let state = machine.initialState;
+let state = fizzBuzzMachine.initialState;
 
-for (let i = 1; i < 5; i++) {
-  state = machine.transition(state, 'increment', i);
+for (let i = 1; i <= 100; i++) {
+  state = fizzBuzzMachine.transition(state, 'increment', i);
   state.actions.forEach(item => actions[item](i));
 }
-
-// for (let i = 1; i < 100; i++) {
-//   if (i % 3 === 0) {
-//     console.log(i, 'Fizz');
-//   } else {
-//     if (i % 5 === 0) {
-//       console.log(i, 'Buzz');
-//     } else {
-//       if (i % 15 === 0) {
-//         console.log(i, 'fizz buzz');
-//       } else {
-//         console.log(i);
-//       }
-//     }
-//   }
-// }
